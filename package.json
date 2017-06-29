@@ -1,6 +1,7 @@
 {
-  "name": "gulp-navy",
+  "name": "gulp-frontend-tasks",
   "version": "0.0.1",
+  "description": "Common Gulp tasks for frontend development packaged as a Node module.",
   "dependencies": {
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.4.2",
