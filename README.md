@@ -1,10 +1,20 @@
 # gulp-navy
 
-Common Gulp tasks for frontend development.
+Common Gulp tasks for frontend development packaged as a Node module, which you can include in your project's gulpfile.
 
 ## Features
 
-`gulp-navy` defines the following tasks
+`gulp-navy` defines the following tasks:
+
+    ├─┬ default
+    │ └── build
+    ├─┬ build
+    │ ├── sass:lint
+    │ └── sass
+    ├─┬ watch
+    │ └── build
+    ├── sass
+    └── sass:lint
 
 ## Usage
 
