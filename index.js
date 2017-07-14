@@ -14,6 +14,10 @@ var autoprefixer = require('gulp-autoprefixer'),
 // used in production.
 var production = typeof argv.production !== 'undefined';
 
+// Allow to delay livereload execution so that it doesn't get triggered right
+// away after compiling sass files.
+var livereload_delay = (typeof argv.livereload_delay !== 'undefined') ? argv.livereload_delay : 0;
+
 // Define paths in the filesystem for easy access.
 var paths = {
   'css': 'css',
@@ -59,8 +63,9 @@ module.exports = function (gulp) {
       .pipe(autoprefixer({ cascade: false }))
       .pipe(gulpif(production, cleanCSS({compatibility: 'ie8'})))
       .pipe(gulpif(!production, sourceMaps.write()))
-      .pipe(gulpif(!production, liveReload()))
-      .pipe(gulp.dest(paths.css));
+      .pipe(gulp.dest(paths.css))
+      .pipe(wait(livereload_delay))
+      .pipe(gulpif(!production, liveReload()));
   });
 
   /**

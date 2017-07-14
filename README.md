@@ -54,3 +54,24 @@ The project uses [sasstools/sass-lint](https://github.com/sasstools/sass-lint) f
     
 You can also create your own lint file and modify the path.
 
+## Arguments
+
+#### `--production`
+
+Use the `--production` flag when executing `gulp`in order to generate the build files 
+that should be put on a production environment.
+
+#### `--livereload_delay`
+
+You can prevent livereload from firing off immediately after the css has been 
+compiled into the css folder. This might be useful for certain environments where
+there can be a minor delay between the files getting generated, and the Drupal build
+detecting them (e.g: docker for mac).
+
+The delay time is specified in milliseconds (ms).
+
+##### Example usage:
+
+  `gulp watch --livereload_delay 1700`
+
+  Would wait 1,7 seconds before firing off the livereload update.
