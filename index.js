@@ -1,13 +1,14 @@
 'use strict';
 
-var autoprefixer = require('gulp-autoprefixer'),
-    argv = require('yargs').argv,
+var argv = require('yargs').argv,
+    autoprefixer = require('gulp-autoprefixer'),
     cleanCSS = require('gulp-clean-css'),
     gulpif = require('gulp-if'),
     liveReload = require('gulp-livereload'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
-    sourceMaps = require('gulp-sourcemaps');
+    sourceMaps = require('gulp-sourcemaps'),
+    wait = require('gulp-wait');
 
 // Set up a boolean variable based on the `--production` flag passed to the
 // gulp command in case the tasks are supposed to prepare the codebase to be
