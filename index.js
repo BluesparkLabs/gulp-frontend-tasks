@@ -16,7 +16,7 @@ var production = typeof argv.production !== 'undefined';
 
 // Allow to delay livereload execution so that it doesn't get triggered right
 // away after compiling sass files.
-var livereload_delay = (typeof argv.livereload_delay !== 'undefined') ? argv.livereload_delay : 0;
+var livereloadDelay = (typeof argv['livereload-delay'] !== 'undefined') ? argv['livereload-delay'] : 0;
 
 // Define paths in the filesystem for easy access.
 var paths = {
@@ -64,7 +64,7 @@ module.exports = function (gulp) {
       .pipe(gulpif(production, cleanCSS({compatibility: 'ie8'})))
       .pipe(gulpif(!production, sourceMaps.write()))
       .pipe(gulp.dest(paths.css))
-      .pipe(wait(livereload_delay))
+      .pipe(wait(livereloadDelay))
       .pipe(gulpif(!production, liveReload()));
   });
 

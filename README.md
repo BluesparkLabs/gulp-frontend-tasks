@@ -61,7 +61,7 @@ You can also create your own lint file and modify the path.
 Use the `--production` flag when executing `gulp`in order to generate the build files 
 that should be put on a production environment.
 
-#### `--livereload_delay`
+#### `--livereload-delay`
 
 You can prevent livereload from firing off immediately after the css has been 
 compiled into the css folder. This might be useful for certain environments where
@@ -72,6 +72,6 @@ The delay time is specified in milliseconds (ms).
 
 ##### Example usage:
 
-  `gulp watch --livereload_delay 1700`
+  `gulp watch --livereload-delay 1700`
 
   Would wait 1,7 seconds before firing off the livereload update.
