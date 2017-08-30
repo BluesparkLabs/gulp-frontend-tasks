@@ -31,7 +31,7 @@ Include `gulp-frontend-tasks` as a dependency in your project's `package.json` f
 
     "dependencies": {
       "gulp": "^3.9.1",
-      "gulp-frontend-tasks": "github:balintk/gulp-frontend-tasks",
+      "gulp-frontend-tasks": "github:bluesparklabs/gulp-frontend-tasks",
       ...
     },
     
