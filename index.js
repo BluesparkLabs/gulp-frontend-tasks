@@ -10,14 +10,27 @@ var argv = require('yargs').argv,
     sourceMaps = require('gulp-sourcemaps'),
     wait = require('gulp-wait');
 
-// Set up a boolean variable based on the `--production` flag passed to the
-// gulp command in case the tasks are supposed to prepare the codebase to be
-// used in production.
-var production = typeof argv.production !== 'undefined';
+// CSS minification is disabled by default, you can enable with --minify.
+var minify = (typeof argv.minify !== 'undefined');
 
-// Allow to delay livereload execution so that it doesn't get triggered right
-// away after compiling sass files.
-var livereloadDelay = (typeof argv['livereload-delay'] !== 'undefined') ? argv['livereload-delay'] : 0;
+// Sourcemaps are enabled by default, you can disable them with --no-sourcemaps.
+var noSourceMaps = (typeof argv['no-sourcemaps'] !== 'undefined');
+
+// Live reload is enabled by default, you can disable it with --no-livereload.
+var noLiveReload = (typeof argv['no-livereload'] !== 'undefined');
+
+// You may specify a delay in milliseconds for LiveReload so that it doesn't
+// get triggered right away after compiling sass files.
+var liveReloadDelay = (!noLiveReload && typeof argv['livereload-delay'] !== 'undefined') ? argv['livereload-delay'] : 0;
+
+
+// Production mode is the functional equivalent of specifying the following:
+//   --minify --no-sourcemaps --no-livereload
+// specifying the --production argument overrides any individual argument.
+var production = typeof argv.production !== 'undefined';
+if (production) {
+  minify = noSourceMaps = noLiveReload = true;
+}
 
 // Define paths in the filesystem for easy access.
 var paths = {
@@ -48,7 +61,7 @@ module.exports = function (gulp) {
    * accordingly.
    */
   gulp.task('watch', ['build'], function () {
-    if (!production) {
+    if (!noLiveReload) {
       liveReload.listen();
     }
     gulp.watch(paths.scss, ['sass:lint', 'sass']);
@@ -59,14 +72,14 @@ module.exports = function (gulp) {
    */
   gulp.task('sass', function () {
     return gulp.src(paths.scssEntrypoint)
-      .pipe(sourceMaps.init())
+      .pipe(gulpif(!noSourceMaps, sourceMaps.init()))
       .pipe(sass().on('error', sass.logError))
       .pipe(autoprefixer({ cascade: false }))
-      .pipe(gulpif(production, cleanCSS({compatibility: 'ie8'})))
-      .pipe(sourceMaps.write(''))
+      .pipe(gulpif(minify, cleanCSS({compatibility: 'ie8'})))
+      .pipe(gulpif(!noSourceMaps, sourceMaps.write('')))
       .pipe(gulp.dest(paths.css))
-      .pipe(wait(livereloadDelay))
-      .pipe(gulpif(!production, liveReload()));
+      .pipe(gulpif(liveReloadDelay, wait(liveReloadDelay)))
+      .pipe(gulpif(!noLiveReload, liveReload()));
   });
 
   /**
