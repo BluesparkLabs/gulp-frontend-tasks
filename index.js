@@ -59,11 +59,11 @@ module.exports = function (gulp) {
    */
   gulp.task('sass', function () {
     return gulp.src(paths.scssEntrypoint)
-      .pipe(gulpif(!production, sourceMaps.init()))
+      .pipe(sourceMaps.init())
       .pipe(sass().on('error', sass.logError))
       .pipe(autoprefixer({ cascade: false }))
       .pipe(gulpif(production, cleanCSS({compatibility: 'ie8'})))
-      .pipe(gulpif(!production, sourceMaps.write()))
+      .pipe(sourceMaps.write(''))
       .pipe(gulp.dest(paths.css))
       .pipe(wait(livereloadDelay))
       .pipe(gulpif(!production, liveReload()));
