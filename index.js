@@ -35,11 +35,7 @@ if (production) {
 // Define paths in the filesystem for easy access.
 var paths = {
   'css': 'css',
-  'scss': 'scss/**/*.scss',
-  'scssEntrypoint': [
-    'scss/style.scss',
-    'scss/print.scss'
-  ]
+  'scss': 'scss/**/*.scss'
 };
 
 module.exports = function (gulp) {
@@ -71,7 +67,7 @@ module.exports = function (gulp) {
    * Task: Compiles Sass files to CSS.
    */
   gulp.task('sass', function () {
-    return gulp.src(paths.scssEntrypoint)
+    return gulp.src(paths.scss)
       .pipe(gulpif(!noSourceMaps, sourceMaps.init()))
       .pipe(sass().on('error', sass.logError))
       .pipe(autoprefixer({ cascade: false }))
