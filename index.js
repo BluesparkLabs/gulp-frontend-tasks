@@ -7,6 +7,7 @@ var argv = require('yargs').argv,
     liveReload = require('gulp-livereload'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
+    sassGlob = require('gulp-sass-glob'),
     sourceMaps = require('gulp-sourcemaps'),
     wait = require('gulp-wait');
 
@@ -69,6 +70,7 @@ module.exports = function (gulp) {
   gulp.task('sass', function () {
     return gulp.src(paths.scss)
       .pipe(gulpif(!noSourceMaps, sourceMaps.init()))
+      .pipe(sassGlob().on('error', sass.logError))
       .pipe(sass().on('error', sass.logError))
       .pipe(autoprefixer({ cascade: false }))
       .pipe(gulpif(minify, cleanCSS({compatibility: 'ie8'})))
