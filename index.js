@@ -35,7 +35,7 @@ if (production) {
 // Define paths in the filesystem for easy access.
 var paths = {
   'css': 'css',
-  'scss': 'scss/**/*.scss'
+  'scss': ['scss/**/*.scss', 'sass/**/*.scss']
 };
 
 module.exports = function (gulp) {
