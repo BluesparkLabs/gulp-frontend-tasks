@@ -1,0 +1,17 @@
+{
+  "name": "test-gulp-frontend-tasks",
+  "version": "1.0.0",
+  "description": "A small example implementation used to test gulp-frontend-tasks features.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "contributors": [
+    "Balint Kleri (https://github.com/balintk)",
+    "James Wilson (https://github.com/jameswilson)"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
