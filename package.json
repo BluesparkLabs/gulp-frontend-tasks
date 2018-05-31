@@ -1,8 +1,14 @@
 {
   "name": "gulp-frontend-tasks",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Common Gulp tasks for frontend development packaged as a Node module.",
+  "contributors": [
+    "Balint Kleri (https://github.com/balintk)",
+    "James Wilson (https://github.com/jameswilson)"
+  ],
+  "license": "MIT",
   "dependencies": {
+    "browser-sync": "^2.24.4",
     "gulp-autoprefixer": "^4.1.0",
     "gulp-clean-css": "^3.9.4",
     "gulp-if": "2.0.2",

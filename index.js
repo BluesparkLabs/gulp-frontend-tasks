@@ -2,9 +2,9 @@
 
 var argv = require('yargs').argv,
     autoprefixer = require('gulp-autoprefixer'),
+    browserSync = require('browser-sync'),
     cleanCSS = require('gulp-clean-css'),
     gulpif = require('gulp-if'),
-    liveReload = require('gulp-livereload'),
     sass = require('gulp-sass'),
     sassLint = require('gulp-sass-lint'),
     sassGlob = require('gulp-sass-glob'),
@@ -17,20 +17,19 @@ var minify = (typeof argv.minify !== 'undefined');
 // Sourcemaps are enabled by default, you can disable them with --no-sourcemaps.
 var noSourceMaps = (typeof argv['no-sourcemaps'] !== 'undefined');
 
-// Live reload is enabled by default, you can disable it with --no-livereload.
-var noLiveReload = (typeof argv['no-livereload'] !== 'undefined');
+// BrowserSync is enabled by default when runing `gulp watch`, you can disable it with --no-browsersync.
+var noBrowserSync = (typeof argv['no-browsersync'] !== 'undefined');
 
-// You may specify a delay in milliseconds for LiveReload so that it doesn't
+// You may specify a delay in milliseconds for BrowserSync so that it doesn't
 // get triggered right away after compiling sass files.
-var liveReloadDelay = (!noLiveReload && typeof argv['livereload-delay'] !== 'undefined') ? argv['livereload-delay'] : 0;
-
+var browserSyncDelay = (!noBrowserSync && typeof argv['browsersync-delay'] !== 'undefined') ? argv['browsersync-delay'] : 0;
 
 // Production mode is the functional equivalent of specifying the following:
-//   --minify --no-sourcemaps --no-livereload
+//   --minify --no-sourcemaps --no-browsersync
 // specifying the --production argument overrides any individual argument.
 var production = typeof argv.production !== 'undefined';
 if (production) {
-  minify = noSourceMaps = noLiveReload = true;
+  minify = noSourceMaps = noBrowserSync = true;
 }
 
 // Define paths in the filesystem for easy access.
@@ -58,8 +57,8 @@ module.exports = function (gulp) {
    * accordingly.
    */
   gulp.task('watch', ['build'], function () {
-    if (!noLiveReload) {
-      liveReload.listen();
+    if (!noBrowserSync) {
+      browserSync.init();
     }
     gulp.watch(paths.scss, ['sass:lint', 'sass']);
   });
@@ -76,8 +75,8 @@ module.exports = function (gulp) {
       .pipe(gulpif(minify, cleanCSS({compatibility: 'ie8'})))
       .pipe(gulpif(!noSourceMaps, sourceMaps.write('')))
       .pipe(gulp.dest(paths.css))
-      .pipe(gulpif(liveReloadDelay, wait(liveReloadDelay)))
-      .pipe(gulpif(!noLiveReload, liveReload()));
+      .pipe(gulpif(browserSyncDelay, wait(browserSyncDelay)))
+      .pipe(browserSync.stream());
   });
 
   /**
@@ -89,6 +88,13 @@ module.exports = function (gulp) {
         files: {ignore: 'scss/base/_normalize.scss'}
       }))
       .pipe(sassLint.format())
+  });
+
+  /**
+   * Task: Run the BrowserSync server.
+   */
+  gulp.task('browsersync', function() {
+    browserSync.init();
   });
 
 };

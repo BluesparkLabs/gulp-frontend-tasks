@@ -75,13 +75,13 @@ that could be put on a production environment.
 SourceMaps are enabled by default when executing `gulp`. The *.css.map files are stored in separate files adjacent to each css file found in the `css` folder. You can disable this behavior by specifying the `--no-sourcemaps`
 argument.
 
-#### `--no-livereload`
+#### `--no-browsersync`
 
-LiveReload is enabled by default when executing `gulp`. You can disable it with the `--no-livereload` argument.
+BrowserSync is enabled by default when executing `gulp watch`. You can disable it with the `--no-browsersync` argument.
 
-#### `--livereload-delay`
+#### `--browsersync-delay`
 
-You can prevent LiveReload from firing off immediately after the css has been
+You can prevent BrowserSync from firing off immediately after the css has been
 compiled into the css folder. This might be useful for certain environments
 where there can be a minor delay between the files getting generated, and the
 Drupal build detecting them (e.g: docker for mac).
@@ -93,12 +93,12 @@ The delay time is specified in milliseconds (ms).
 Production mode is the functional equivalent of specifying the following
 arguments on the command line:
 
-    --minify --no-sourcemaps --no-livereload
+    --minify --no-sourcemaps --no-browsersync
 
 Note: the `--production` argument overrides any individual argument.
 
 ##### Example usage:
 
-    gulp watch --livereload-delay 1700
+    gulp watch --browsersync-delay 1700
 
-Would wait 1.7 seconds before firing off the livereload update.
+Would wait 1.7 seconds before firing off the browsersync update.
