@@ -41,26 +41,10 @@ var paths = {
 module.exports = function (gulp) {
 
   /**
-   * Task: Default —> Build.
+   * Task: Run the BrowserSync server.
    */
-  gulp.task('default', ['build']);
-
-  /**
-   * Task: Build.
-   */
-  gulp.task('build', ['sass:lint', 'sass']);
-
-  /**
-   * Task: Watch.
-   *
-   * Continuously watches for changes in Sass and JS files and runs tasks
-   * accordingly.
-   */
-  gulp.task('watch', ['build'], function () {
-    if (!noBrowserSync) {
-      browserSync.init();
-    }
-    gulp.watch(paths.scss, ['sass:lint', 'sass']);
+  gulp.task('browsersync', function() {
+    browserSync.init();
   });
 
   /**
@@ -71,7 +55,7 @@ module.exports = function (gulp) {
       .pipe(gulpif(!noSourceMaps, sourceMaps.init()))
       .pipe(sassGlob().on('error', sass.logError))
       .pipe(sass().on('error', sass.logError))
-      .pipe(autoprefixer({ cascade: false }))
+      .pipe(autoprefixer({cascade: false}))
       .pipe(gulpif(minify, cleanCSS({compatibility: 'ie8'})))
       .pipe(gulpif(!noSourceMaps, sourceMaps.write('')))
       .pipe(gulp.dest(paths.css))
@@ -91,10 +75,26 @@ module.exports = function (gulp) {
   });
 
   /**
-   * Task: Run the BrowserSync server.
+   * Task: Build.
    */
-  gulp.task('browsersync', function() {
-    browserSync.init();
+  gulp.task('build', gulp.series('sass:lint', 'sass'));
+
+  /**
+   * Task: Default —> Build.
+   */
+  gulp.task('default', gulp.series('build'));
+
+  /**
+   * Task: Watch.
+   *
+   * Continuously watches for changes in Sass and JS files and runs tasks
+   * accordingly.
+   */
+  gulp.task('watch', gulp.series('build'), function () {
+    if (!noBrowserSync) {
+      browserSync.init();
+    }
+    gulp.watch(paths.scss, ['sass:lint', 'sass']);
   });
 
 };
