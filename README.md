@@ -35,7 +35,7 @@ Include `gulp-frontend-tasks` as a dependency in your project's `package.json`
 file (along with Gulp itself):
 
     "dependencies": {
-      "gulp": "^3.9.1",
+      "gulp": "^4.0.0",
       "gulp-frontend-tasks": "github:bluesparklabs/gulp-frontend-tasks",
       ...
     },
