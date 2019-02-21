@@ -90,11 +90,11 @@ module.exports = function (gulp) {
    * Continuously watches for changes in Sass and JS files and runs tasks
    * accordingly.
    */
-  gulp.task('watch', gulp.series('build'), function () {
+  gulp.task('watch', function () {
     if (!noBrowserSync) {
       browserSync.init();
     }
-    gulp.watch(paths.scss, ['sass:lint', 'sass']);
+    gulp.watch(paths.scss, gulp.series('build'));
   });
 
 };
